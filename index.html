@@ -1049,7 +1049,7 @@ const SIZE_LIST=SIZES.map(r=>r[0]==="0 (mini)"?"0 mini":r[0]);
 if(!SIZE_LIST.includes(size))size="";
 const chipHTML=t=>`<button type="button" class="szc" data-s="${t}" aria-pressed="${t===size}">${t==="0 mini"?"0 mini":t}<small>${MEAS[t][4].replace(" kg","")} kg</small></button>`;
 ["shopSizes"].forEach(id=>{const el=document.getElementById(id);el.innerHTML=SIZE_LIST.map(chipHTML).join("");
-  el.addEventListener("click",e=>{const b=e.target.closest(".szc");if(!b)return;setSize(size===b.dataset.s?"":b.dataset.s);if(0)document.getElementById("tienda").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})});
+  el.addEventListener("click",e=>{const b=e.target.closest(".szc");if(!b)return;setSize(size===b.dataset.s?"":b.dataset.s);toShop();if(0)document.getElementById("tienda").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})})});
 document.getElementById("clearSize").addEventListener("click",()=>setSize(""));
 const mainEl=document.getElementById("mainTabs"),subEl=document.getElementById("subTabs");
 function drawTabs(){
@@ -1060,8 +1060,9 @@ function setMain(m,s=""){main=m;sub=s;document.body.classList.toggle("m",m==="m"
 function drawDir(){return;document.getElementById("catDir").innerHTML=CATS.map(c=>{const n=gcount(c.id,"");
   const subs=c.subs.filter(s=>ALL.some(p=>inCat(p,c.id,s)));
   return `<div class="catcol" data-m="${c.id}"><h3>${c.name}</h3><p>${c.hint} · ${n} modelos</p><div class="catlinks"><button type="button" class="catlink all" data-m="${c.id}" data-s="">Ver todo</button>${subs.map(s=>`<button type="button" class="catlink" data-m="${c.id}" data-s="${s}">${s}</button>`).join("")}</div></div>`}).join("")}
-mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b)setMain(b.dataset.m)});
-subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};drawTabs();render()});
+function toShop(){const s=document.getElementById("tienda");const h=(document.querySelector("header.top")||{}).offsetHeight||58;const y=s.getBoundingClientRect().top+scrollY-h;if(scrollY>y+5)window.scrollTo({top:y,behavior:"auto"})}
+mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b){setMain(b.dataset.m);toShop()}});
+subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};drawTabs();render();toShop()});
 const goShop=g=>{setMain(g);document.getElementById("tienda").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})};
 
 document.querySelectorAll(".tile[data-m]").forEach(b=>b.addEventListener("click",()=>{setMain(b.dataset.m,b.dataset.s);document.getElementById("tienda").scrollIntoView({behavior:"smooth"})}));
@@ -1144,7 +1145,7 @@ function cardHTML(gr,i,v,keepT){
     <div class="from">${fromTxt}</div>
     <div class="plabel">Precio por talla${many?" de este "+(/^Oferta/.test(gr.vs[0].label)?"artículo":"color/modelo"):""} <span>· toca la tuya</span></div>
     <div class="sizes" role="group" aria-label="Tallas">${p.prices.map((s2,j)=>`<button type="button" class="size" data-j="${j}" aria-pressed="${j===sel}"><span>${s2.t==="Único"?"Único":s2.t==="Par"?"1 par":s2.t==="Set"?"Set completo":"Talla "+s2.t}</span>${money(s2.v)}</button>`).join("")}</div>
-    <div class="meas">${sel>=0?measFor(p,p.prices[sel].t):(/^(Único|Par|Set)$/.test(p.prices[0].t)?"":"Toca una talla para ver sus medidas")}</div>
+    <div class="meas">${sel>=0?measFor(p,p.prices[sel].t):(p.prices[0]&&/^(Único|Par|Set)$/.test(p.prices[0].t)?"":"Toca una talla para ver sus medidas")}</div>
     <a class="btn-wa" href="${waLink(wp,sel>=0?p.prices[sel]:null)}" target="_blank" rel="noopener">${waIcon}Pedir por WhatsApp</a></div></article>`}
 
 drawDir();drawTabs();render();
