@@ -939,8 +939,8 @@ const COLS=[
   ["Polos de algodón · Amarillo osito", "Polos en algodón veraniego, con ajuste elástico para mayor comodidad.", "1:26", ["pm_amar"]],
   ["Polos de algodón · Celeste ositos", "Polos en algodón veraniego, con ajuste elástico para mayor comodidad.", "3:32,4:35", ["pm_cel2","pm_cel"]],
   ["Polo Fantasy", "Polos en algodón, con ajuste elástico para mayor comodidad, incluye argolla en D integrada.", "1:30,2:35", ["fan1b","fan3","fan2b"]],
-  ["Polo Flamencos", "Polo fresco de algodón con capucha y estampado de flamencos y anclas.", "", ["pfl0","pfl1"]],
-  ["Polo Smile", "Polo de algodón a rayas pastel con parche de carita feliz.", "", ["psm0","psm1"]],
+  ["Polo Flamencos", "Polo fresco de algodón con capucha y estampado de flamencos y anclas.", "1:26,2:29,3:32,4:35", ["pfl0","pfl1"]],
+  ["Polo Smile", "Polo de algodón a rayas pastel con parche de carita feliz.", "1:26,2:29,3:32,4:35", ["psm0","psm1"]],
   ["Camisas últimas tallas · Modelo 1", "", "3:35", ["cut1_dog","cut1_a","cut1_b"]],
   ["Camisas últimas tallas · Modelo 2", "", "4:38", ["cut2_a","cut2_b"]],
   ["Camisas últimas tallas · Modelo 3", "", "4:38", ["cut3_a","cut3_b"]],
@@ -977,7 +977,7 @@ const COLS=[
   ["Overoles · Modelo 15", "", "1:37", ["vc1","vc2","vc3"]],
   ["Overoles · Modelo 16", "Overol de corduroy crema con osito bordado y camisa a cuadros integrada.", "4:45", ["ov160"]],
   ["Overoles · New York", "Overol de denim claro con bordado New York y polo azul marino integrado.", "1:37", ["ovny"]],
-  ["Overoles · Tuesday", "Overol acolchado abrigador con polo a rayas integrado, perrito de peluche y argolla en D para la correa.", "", ["ovtu0","ovtu1"]],
+  ["Overoles · Tuesday", "Overol acolchado abrigador con polo a rayas integrado, perrito de peluche y argolla en D para la correa.", "1:37,2:40,3:45,4:45", ["ovtu0","ovtu1"]],
   ["Oferta 1", "Prenda en oferta, última unidad en esta talla.", "1:10", ["M_sale1"]],
   ["Oferta 2", "Prenda en oferta, última unidad en esta talla.", "1:15,2:18", ["M_sale2"]],
   ["Oferta 3", "Prenda en oferta, última unidad en esta talla.", "1:15", ["M_sale3"]],
@@ -1012,7 +1012,7 @@ const money=v=>v==null?"Consultar":"S/ "+v.toFixed(2);
 document.getElementById("sizeRows").innerHTML=SIZES.map(r=>"<tr>"+r.map(c=>"<td>"+c+"</td>").join("")+"</tr>").join("");
 
 let main="h",sub="",size="";
-try{size=localStorage.getItem("byp-size")||""}catch(e){}
+try{size=""}catch(e){}
 const CATS=[
  {id:"h",name:"Hembra",hint:"Para perritas",subs:["Vestidos de verano","Polos","Vestidos denim","Chalecos denim","Vestidos de gala","Navidad","Ropa otoño invierno","Overoles","Ofertas verano","Ofertas gala","Ofertas invierno"]},
  {id:"m",name:"Macho",hint:"Para machitos",subs:["Camisas","Camisas de gala","Polos","Ropa otoño invierno","Overoles","Ofertas"]},
@@ -1060,12 +1060,13 @@ function setMain(m,s=""){main=m;sub=s;document.body.classList.toggle("m",m==="m"
 function drawDir(){return;document.getElementById("catDir").innerHTML=CATS.map(c=>{const n=gcount(c.id,"");
   const subs=c.subs.filter(s=>ALL.some(p=>inCat(p,c.id,s)));
   return `<div class="catcol" data-m="${c.id}"><h3>${c.name}</h3><p>${c.hint} · ${n} modelos</p><div class="catlinks"><button type="button" class="catlink all" data-m="${c.id}" data-s="">Ver todo</button>${subs.map(s=>`<button type="button" class="catlink" data-m="${c.id}" data-s="${s}">${s}</button>`).join("")}</div></div>`}).join("")}
+function resetSize(){size="";document.querySelectorAll(".szc").forEach(x=>x.setAttribute("aria-pressed","false"));const cs=document.getElementById("clearSize");if(cs)cs.hidden=true}
 function toShop(){const s=document.getElementById("tienda");const h=(document.querySelector("header.top")||{}).offsetHeight||58;const y=s.getBoundingClientRect().top+scrollY-h;if(scrollY>y+5)window.scrollTo({top:y,behavior:"auto"})}
-mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b){setMain(b.dataset.m);toShop()}});
-subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};drawTabs();render();toShop()});
+mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b){resetSize();setMain(b.dataset.m);toShop()}});
+subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};resetSize();drawTabs();render();toShop()});
 const goShop=g=>{setMain(g);document.getElementById("tienda").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"})};
 
-document.querySelectorAll(".tile[data-m]").forEach(b=>b.addEventListener("click",()=>{setMain(b.dataset.m,b.dataset.s);document.getElementById("tienda").scrollIntoView({behavior:"smooth"})}));
+document.querySelectorAll(".tile[data-m]").forEach(b=>b.addEventListener("click",()=>{resetSize();setMain(b.dataset.m,b.dataset.s);document.getElementById("tienda").scrollIntoView({behavior:"smooth"})}));
 document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();goShop(a.dataset.go)}));
 function setSize(t){size=t;try{localStorage.setItem("byp-size",t)}catch(e){}
   document.querySelectorAll(".szc").forEach(x=>x.setAttribute("aria-pressed",x.dataset.s===size));
