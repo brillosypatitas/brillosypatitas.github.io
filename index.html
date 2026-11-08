@@ -841,7 +841,7 @@ const COLS=[
   ["Chompa Love Better · Crema I love U", "Chompa acanalada crema con sobre bordado “I love U”, lacitos de satín en los hombros y argolla en D para la correa.", "3:39", ["ilu0","ilu1"]],
   ["Chompa NY-2 · Celeste New York", "¡Estilo universitario! Casaca de tela tipo denim celeste con bordado New York 52 y puños a rayas.", "2:36,3:39", ["ny21a","ny21b"]],
   ["Chompa NY-2 · Osito", "", "2:36", ["I_chompany2modelo20"]],
-  ["Chompa Love Better · Gris gatita", "¡Cómoda y con estilo! Polera gris de algodón con estampado de gatita, suave y fresca.", "4:42", ["lbt1","lbt2"]],
+  ["Oferta 12", "Polera gris de algodón con estampado de gatita, suave y fresca. Última unidad en esta talla.", "5:25", ["lbt1","lbt2"]],
   ["Chompa NY-X · Azul", "¡Estilo deportivo! Polera con capucha, letras New York bordadas y cierre de broches. Abrigadora y cómoda.", "2:36", ["nyx1a","nyx1b"]],
   ["Chompa NY-X · Rojo", "¡Estilo deportivo! Polera con capucha, letras New York bordadas y cierre de broches. Abrigadora y cómoda.", "2:36", ["nyx2a","nyx2b"]],
   ["Últimas tallas · Polera Conejita lila", "¡Tierna y abrigadora! Polera con capucha de conejita, orejitas y carita bordada. Suave por dentro.", "1:33", ["bun1","bun2"]],
@@ -1036,7 +1036,7 @@ function catsOf(p){
   if(c==="invierno"&&/Varsity|Polera Bicolor|Polera Clásica/.test(n))return[["m","Ropa otoño invierno"]];
   const HEMB=["Chompa Velvet", "Chompa Kissme", "Polera Pink", "Últimas tallas · Polera Conejita lila", "Últimas tallas · Modelo 8", "Últimas tallas · Modelo 9", "Últimas tallas · Modelo 10", "Puffer Jacket · Modelo 1", "Puffer Jacket · Modelo 3", "Poleras Pets · Modelo 5", "Poleras tallas grandes · Rosado", "Chompa NY-2 · Osito", "Chompa Amber · Modelo 1", "Chompa Amber · Modelo 2", "Últimas tallas · Modelo 1", "Últimas tallas · Modelo 3"];
   if(c==="invierno"&&!sale&&(HEMB.includes(n)||/^(Chompa polar|Polera Sweet Teddy|Chompa Love (Inn|Bug|Better)|Chompa Candy Heart|Chompa Flowers|Chompa de Felpa|Polera Sweetheart)/.test(n)))return[["h","Ropa otoño invierno"]];
-  if(c==="invierno")return sale?(["Oferta 2","Oferta 3","Oferta 4","Oferta 5","Oferta 7"].includes(n)?[["h","Ofertas invierno"]]:[["h","Ofertas invierno"],["m","Ofertas"]]):[["h","Ropa otoño invierno"],["m","Ropa otoño invierno"]];
+  if(c==="invierno")return sale?(["Oferta 2","Oferta 3","Oferta 4","Oferta 5","Oferta 7","Oferta 12"].includes(n)?[["h","Ofertas invierno"]]:[["h","Ofertas invierno"],["m","Ofertas"]]):[["h","Ropa otoño invierno"],["m","Ropa otoño invierno"]];
   if(c==="machitos"){
     if(sale)return[["m","Ofertas"]];
     if(/gala|Smoking/i.test(n))return[["m","Camisas de gala"]];
