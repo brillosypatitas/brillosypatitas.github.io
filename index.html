@@ -360,6 +360,17 @@ body{transition:background-color .3s}
 @keyframes snow{from{background-position:0 0}to{background-position:60px 440px}}
 @media (prefers-reduced-motion:reduce){.hero.snow::before,.hero.snow::after{animation:none}}
 .hero.snow{background:radial-gradient(90% 80% at 90% 0%,#f7d6dc 0,transparent 55%),radial-gradient(70% 70% at 60% 100%,#d9ecdf 0,transparent 60%),var(--blush)}
+.xmasband{background:linear-gradient(135deg,#7d1325,#a91f37 55%,#1d5e3f);color:#fff;position:relative;overflow:hidden;padding:28px 0}
+.xmasband::before{content:"";position:absolute;inset:-60px 0 0;pointer-events:none;background-image:radial-gradient(3px 3px at 20px 30px,#fff,transparent 60%),radial-gradient(2px 2px at 90px 120px,#fff,transparent 60%),radial-gradient(3px 3px at 160px 60px,#fff,transparent 60%),radial-gradient(2px 2px at 230px 170px,#fff,transparent 60%),radial-gradient(2.5px 2.5px at 300px 90px,#fff,transparent 60%);background-size:320px 220px;opacity:.7;animation:snow 16s linear infinite}
+.xb-in{position:relative;display:grid;gap:20px;align-items:center}
+@media(min-width:760px){.xb-in{grid-template-columns:1fr 1fr}}
+.xb-vid{border-radius:22px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.3);border:4px solid #fff;aspect-ratio:1/1;background:#5e0f1d}
+.xb-vid video{width:100%;height:100%;object-fit:cover;display:block}
+.xb-eye{letter-spacing:.12em;font-weight:700;font-size:.8rem;text-transform:uppercase;color:#ffe08a}
+.xmasband h2{color:#fff;font-size:clamp(2rem,7vw,3.2rem);margin:.2em 0 .3em}
+.xmasband p{color:#ffeef0;max-width:34ch;margin:0 0 18px;font-size:1.02rem}
+.xb-btn{background:#fff!important;color:#a91f37!important;font-weight:800}
+@media (prefers-reduced-motion:reduce){.xmasband::before{animation:none}}
 </style>
 
 <div class="promo xmas"><a href="#tienda" data-nav="h|Navidad">🎄 <b>Colección Navideña</b> ya disponible · <u>Ver colección</u></a><span class="sep"> · </span><a href="#envios">🚚 Envío gratis desde <b>S/ 300</b></a></div>
@@ -398,6 +409,18 @@ body{transition:background-color .3s}
       </div>
     </div>
   </div>
+
+  <section class="xmasband" aria-label="Colección navideña">
+    <div class="wrap xb-in">
+      <div class="xb-vid"><video src="video/navidad.mp4" poster="video/navidad.jpg" autoplay muted loop playsinline preload="metadata" aria-hidden="true"></video></div>
+      <div class="xb-txt">
+        <div class="xb-eye">✨ 🎁 Navidad 2026 🎄 ✨</div>
+        <h2>Colección Navideña</h2>
+        <p>Vestidos de terciopelo, escoceses y de Mamá Noel para que tu engreída brille en la cena y en las fotos familiares.</p>
+        <a class="btn-wa btn-xmas xb-btn" href="#tienda" data-nav="h|Navidad">Ver colección →</a>
+      </div>
+    </div>
+  </section>
 
   <div class="trust">
     <div class="wrap">
