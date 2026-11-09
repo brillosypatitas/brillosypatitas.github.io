@@ -347,9 +347,22 @@ body{transition:background-color .3s}
 .tlink{cursor:pointer}
 .tlink u{color:var(--pink);font-weight:700;text-underline-offset:2px}
 .envh{font-size:1.05rem;margin:22px 0 10px;font-weight:700}
+.promo.xmas{background:linear-gradient(90deg,#9e1b32,#b3263d 50%,#1f6b46);color:#fff}
+.promo.xmas a{color:#fff;text-decoration:none}.promo.xmas b{color:#ffe08a}
+@media (max-width:560px){.promo.xmas .sep,.promo.xmas a+.sep+a{display:none}}
+.btn-wa.btn-xmas{background:#b3263d;color:#fff}
+.tile-xmas span{background:#b3263d!important;color:#fff!important}
+.hero.snow::before,.hero.snow::after{content:"";position:absolute;inset:-40px 0 0 0;pointer-events:none;z-index:0;
+ background-image:radial-gradient(3px 3px at 20px 30px,#fff,transparent 60%),radial-gradient(2px 2px at 80px 120px,#fff,transparent 60%),radial-gradient(3px 3px at 150px 60px,#fff,transparent 60%),radial-gradient(2px 2px at 220px 160px,#fff,transparent 60%),radial-gradient(2.5px 2.5px at 290px 90px,#fff,transparent 60%);
+ background-size:320px 220px;opacity:.85;filter:drop-shadow(0 0 1px rgba(0,0,0,.08));animation:snow 18s linear infinite}
+.hero.snow::after{background-size:420px 300px;opacity:.55;animation-duration:28s}
+.hero.snow .wrap{position:relative;z-index:1}
+@keyframes snow{from{background-position:0 0}to{background-position:60px 440px}}
+@media (prefers-reduced-motion:reduce){.hero.snow::before,.hero.snow::after{animation:none}}
+.hero.snow{background:radial-gradient(90% 80% at 90% 0%,#f7d6dc 0,transparent 55%),radial-gradient(70% 70% at 60% 100%,#d9ecdf 0,transparent 60%),var(--blush)}
 </style>
 
-<div class="promo"><a href="#envios">🚚 <b>Envío gratis</b> en compras desde <b>S/ 300</b> · <u>Ver tarifas de envío</u></a></div>
+<div class="promo xmas"><a href="#tienda" data-nav="h|Navidad">🎄 <b>Colección Navideña</b> ya disponible · <u>Ver colección</u></a><span class="sep"> · </span><a href="#envios">🚚 Envío gratis desde <b>S/ 300</b></a></div>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#inicio">
@@ -364,22 +377,23 @@ body{transition:background-color .3s}
 </header>
 
 <main id="inicio">
-  <div class="hero">
+  <div class="hero snow">
     <div class="wrap">
       <div class="hero-txt">
-        <div class="eyebrow">Pet shop · Envíos a todo el Perú</div>
+        <div class="eyebrow">🎄 Navidad 2026 · Envíos a todo el Perú</div>
         <h1>Brillo en cada <span>huella</span></h1>
         <p class="lead">Ropa y accesorios para que tu <b>mascota</b> luzca con estilo y esté siempre cómoda. Elige tu modelo, pide por WhatsApp ¡y te lo llevamos!</p>
         <div class="ctas">
+          <a class="btn-wa btn-xmas" href="#tienda" data-nav="h|Navidad">🎄 Colección navideña</a>
           <a class="btn-wa btn-pink" href="#tienda" data-go="h">Hembra</a>
           <a class="btn-wa btn-blue" href="#tienda" data-go="m">Macho</a>
           <a class="btn-wa btn-acc" href="#tienda" data-go="a">Accesorios</a>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <img class="ph ph1" src="img/prr2.jpg" alt="">
-        <img class="ph ph2" src="img/ang2.jpg" alt="">
-        <img class="ph ph3" src="img/gala2_perro.jpg" alt="">
+        <img class="ph ph1" src="img/nvt1.jpg" alt="">
+        <img class="ph ph2" src="img/nvc1.jpg" alt="">
+        <img class="ph ph3" src="img/noel2.jpg" alt="">
         <span class="badge-logo"><img src="img/logo_l.png" alt=""></span>
       </div>
     </div>
@@ -417,6 +431,7 @@ body{transition:background-color .3s}
     <div class="wrap">
       <div class="sec-head"><div><div class="eyebrow">Colecciones</div><h2>Explora la tienda</h2></div></div>
       <div class="tiles">
+        <button type="button" class="tile tile-xmas" data-m="h" data-s="Navidad"><img src="img/nvt2.jpg" alt="" loading="lazy"><span>🎄 Colección navideña</span></button>
         <button type="button" class="tile" data-m="h" data-s="Vestidos de verano"><img src="img/yel1.jpg" alt="" loading="lazy"><span>Vestidos de verano</span></button>
         <button type="button" class="tile" data-m="h" data-s="Vestidos de gala"><img src="img/prr1.jpg" alt="" loading="lazy"><span>Vestidos de gala</span></button>
         <button type="button" class="tile" data-m="h" data-s="Vestidos denim"><img src="img/glo_az_dog.jpg" alt="" loading="lazy"><span>Denim</span></button>
@@ -1018,8 +1033,8 @@ document.getElementById("sizeRows").innerHTML=SIZES.map(r=>"<tr>"+r.map(c=>"<td>
 let main="h",sub="",size="";
 try{size=""}catch(e){}
 const CATS=[
- {id:"h",name:"Hembra",hint:"Para perritas",subs:["Vestidos de verano","Polos","Vestidos denim","Chalecos denim","Vestidos de gala","Navidad","Ropa otoño invierno","Overoles","Ofertas verano","Ofertas gala","Ofertas invierno"]},
- {id:"m",name:"Macho",hint:"Para machitos",subs:["Camisas","Camisas de gala","Polos","Ropa otoño invierno","Overoles","Ofertas"]},
+ {id:"h",name:"Hembra",hint:"Para perritas",subs:["Navidad","Vestidos de verano","Polos","Vestidos denim","Chalecos denim","Vestidos de gala","Ropa otoño invierno","Overoles","Ofertas verano","Ofertas gala","Ofertas invierno"]},
+ {id:"m",name:"Macho",hint:"Para machitos",subs:["Navidad","Camisas","Camisas de gala","Polos","Ropa otoño invierno","Overoles","Ofertas"]},
  {id:"a",name:"Accesorios",hint:"Collares, ganchitos y pecheras",subs:["Pecheras","Collares","Ganchitos","Cumpleaños"]}];
 const DENIM=["Vestido Bunny","Vestido Victoria","Vestido Antonia","Vestido Oso","Vestido Cutebear","Vestido Gloria","Vestido Denim"];
 function catsOf(p){
@@ -1046,7 +1061,9 @@ function catsOf(p){
     return[["m","Camisas"]]}
   return[["h",""]]}
 const MPOLO=[1,3,4,6,7,11,13,17,18];
-function catsAll(p){const r=catsOf(p).slice();const n=p.name;if(!/^Oferta \d+$/.test(n))return r;const c=p.col.id,num=+n.split(" ")[1];
+const NAVI_H=["Vestido Princesa Tutú · Rojo satín","Vestido Princesa Tutú · Rojo lunares","Vestido Princesa Tutú · Negro y rojo lunares","Vestido Clasic · Rojo lunares","Chompa Love","Chompas tejidas · Huesitos rojo","Chompas Polar · Rojo","Collar de perlas · moño rojo","Collar de perlas · corazón rojo"];
+const NAVI_M=["Camisa A Cuadros · Rojo y negro","Camisa A Cuadros · Blanco y negro moño rojo","Camisa de gala con moño · Chaleco negro moño rojo","Camisa de gala a rayas · Rojo","Chompas tejidas · Huesitos rojo","Chompas Polar · Rojo","Chompa NY-X · Rojo"];
+function catsAll(p){const r=catsOf(p).slice();const n=p.name;if(NAVI_H.includes(n))r.push(["h","Navidad"]);if(NAVI_M.includes(n))r.push(["m","Navidad"]);if(!/^Oferta \d+$/.test(n))return r;const c=p.col.id,num=+n.split(" ")[1];
   if(c==="verano")r.push(["h","Vestidos de verano"]);
   else if(c==="gala")r.push(["h","Vestidos de gala"]);
   else if(c==="invierno"){r.forEach(([g])=>{if(!r.some(x=>x[0]===g&&x[1]==="Ropa otoño invierno"))r.push([g,"Ropa otoño invierno"])})}
@@ -1072,6 +1089,7 @@ function drawDir(){return;document.getElementById("catDir").innerHTML=CATS.map(c
   const subs=c.subs.filter(s=>ALL.some(p=>inCat(p,c.id,s)));
   return `<div class="catcol" data-m="${c.id}"><h3>${c.name}</h3><p>${c.hint} · ${n} modelos</p><div class="catlinks"><button type="button" class="catlink all" data-m="${c.id}" data-s="">Ver todo</button>${subs.map(s=>`<button type="button" class="catlink" data-m="${c.id}" data-s="${s}">${s}</button>`).join("")}</div></div>`}).join("")}
 function resetSize(){size="";document.querySelectorAll(".szc").forEach(x=>x.setAttribute("aria-pressed","false"));const cs=document.getElementById("clearSize");if(cs)cs.hidden=true}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-nav]");if(!a)return;e.preventDefault();const[m,s]=a.dataset.nav.split("|");resetSize();setMain(m,s);toShop()});
 function toShop(){const s=document.getElementById("tienda");const h=(document.querySelector("header.top")||{}).offsetHeight||58;const y=s.getBoundingClientRect().top+scrollY-h;if(scrollY>y+5)window.scrollTo({top:y,behavior:"auto"})}
 mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b){resetSize();setMain(b.dataset.m);toShop()}});
 subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};resetSize();drawTabs();render();toShop()});
@@ -1114,7 +1132,7 @@ function render(){
   if(hasSale)document.getElementById("goSale").onclick=()=>{sub=saleSub;drawDir();drawTabs();render();document.getElementById("tienda").scrollIntoView()};
   let list=term?ALL:ALL.filter(p=>inCat(p,main,sub));
   if(term)list=list.filter(p=>norm(p.name+" "+p.desc+" "+p.col.name).includes(term));
-  list=list.map((p,i)=>[p,i]).sort((a,b)=>(main==="m"&&!sub?(b[0].col.id==="machitos")-(a[0].col.id==="machitos"):0)||(b[0].photos.length>0)-(a[0].photos.length>0)||a[1]-b[1]).map(x=>x[0]);
+  list=list.map((p,i)=>[p,i]).sort((a,b)=>(sub==="Navidad"?(/Navidad|Noel/.test(b[0].name))-(/Navidad|Noel/.test(a[0].name)):0)||(main==="m"&&!sub?(b[0].col.id==="machitos")-(a[0].col.id==="machitos"):0)||(b[0].photos.length>0)-(a[0].photos.length>0)||a[1]-b[1]).map(x=>x[0]);
   const g=document.getElementById("grid");
   let G=groupItems(list);
   if(size&&main!=="a"&&!term)G=G.filter(gr=>gr.vs.some(x=>x.p.prices.some(y=>y.t===size)));
