@@ -1086,9 +1086,9 @@ function catsOf(p){
     return[["m","Camisas"]]}
   return[["h",""]]}
 const MPOLO=[1,3,4,6,7,11,13,17,18];
-const NAVI_H=["Vestido Princesa Tutú · Rojo satín","Vestido Princesa Tutú · Rojo lunares","Vestido Princesa Tutú · Negro y rojo lunares","Vestido Clasic · Rojo lunares","Chompa Love","Chompas tejidas · Huesitos rojo","Chompas Polar · Rojo","Collar de perlas · moño rojo","Collar de perlas · corazón rojo"];
+const NAVI_H=["Vestido Princesa Tutú · Rojo satín","Vestido Princesa Tutú · Rojo lunares","Vestido Princesa Tutú · Negro y rojo lunares","Vestido Princesa Tutú · Azul y rojo","Vestido Clasic · Rojo lunares","Vestido Vichy Elastic · Rojo","Vestido Amalia · Rojo","Vestido Amore · Rosado lazo rojo","Vestido Amore","Colección Liz · Rojo","Chompa Love","Chompas tejidas · Huesitos rojo","Chompas Polar · Rojo","Collar de perlas · moño rojo","Collar de perlas · corazón rojo"];
 const NAVI_M=["Camisa A Cuadros · Rojo y negro","Camisa A Cuadros · Blanco y negro moño rojo","Camisa de gala con moño · Chaleco negro moño rojo","Camisa de gala a rayas · Rojo","Chompas tejidas · Huesitos rojo","Chompas Polar · Rojo","Chompa NY-X · Rojo"];
-function catsAll(p){const r=catsOf(p).slice();const n=p.name;if(NAVI_H.includes(n))r.push(["h","Navidad"]);if(NAVI_M.includes(n))r.push(["m","Navidad"]);if(!/^Oferta \d+$/.test(n))return r;const c=p.col.id,num=+n.split(" ")[1];
+function catsAll(p){const r=catsOf(p).slice();const n=p.name;if(NAVI_H.includes(n)||(p.col.id==="gala"&&n==="Oferta 1"))r.push(["h","Navidad"]);if(NAVI_M.includes(n))r.push(["m","Navidad"]);if(!/^Oferta \d+$/.test(n))return r;const c=p.col.id,num=+n.split(" ")[1];
   if(c==="verano")r.push(["h","Vestidos de verano"]);
   else if(c==="gala")r.push(["h","Vestidos de gala"]);
   else if(c==="invierno"){r.forEach(([g])=>{if(!r.some(x=>x[0]===g&&x[1]==="Ropa otoño invierno"))r.push([g,"Ropa otoño invierno"])})}
@@ -1159,7 +1159,7 @@ function render(){
   if(hasSale)document.getElementById("goSale").onclick=()=>{sub=saleSub;drawDir();drawTabs();render();document.getElementById("tienda").scrollIntoView()};
   let list=term?ALL:ALL.filter(p=>sub==="Navidad"?catsAll(p).some(x=>x[1]==="Navidad"):inCat(p,main,sub));
   if(term)list=list.filter(p=>norm(p.name+" "+p.desc+" "+p.col.name).includes(term));
-  list=list.map((p,i)=>[p,i]).sort((a,b)=>(sub==="Navidad"?(/Navidad|Noel/.test(b[0].name))-(/Navidad|Noel/.test(a[0].name)):0)||(main==="m"&&!sub?(b[0].col.id==="machitos")-(a[0].col.id==="machitos"):0)||(b[0].photos.length>0)-(a[0].photos.length>0)||a[1]-b[1]).map(x=>x[0]);
+  list=list.map((p,i)=>[p,i]).sort((a,b)=>(sub==="Navidad"?((/Navidad|Noel/.test(b[0].name))*2+(/^(Vestido|Oferta|Colección)/.test(b[0].name)))-((/Navidad|Noel/.test(a[0].name))*2+(/^(Vestido|Oferta|Colección)/.test(a[0].name))):0)||(main==="m"&&!sub?(b[0].col.id==="machitos")-(a[0].col.id==="machitos"):0)||(b[0].photos.length>0)-(a[0].photos.length>0)||a[1]-b[1]).map(x=>x[0]);
   const g=document.getElementById("grid");
   let G=groupItems(list);
   if(size&&main!=="a"&&!term)G=G.filter(gr=>gr.vs.some(x=>x.p.prices.some(y=>y.t===size)));
