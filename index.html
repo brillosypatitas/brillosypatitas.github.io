@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Brillos y Patitas</title>
 <meta name="description" content="Ropa y accesorios para mascotas en Lima. Envíos a todo el Perú. Pide por WhatsApp.">
@@ -371,6 +372,7 @@ body{transition:background-color .3s}
 .xmasband p{color:#ffeef0;max-width:34ch;margin:0 0 18px;font-size:1.02rem}
 .xb-btn{background:#fff!important;color:#a91f37!important;font-weight:800}
 @media (prefers-reduced-motion:reduce){.xmasband::before{animation:none}}
+#tienda{scroll-margin-top:72px}
 </style>
 
 <div class="promo xmas"><a href="#tienda" data-nav="h|Navidad">🎄 <b>Colección Navideña</b> ya disponible · <u>Ver colección</u></a><span class="sep"> · </span><a href="#envios">🚚 Envío gratis desde <b>S/ 300</b></a></div>
@@ -1112,7 +1114,9 @@ function drawDir(){return;document.getElementById("catDir").innerHTML=CATS.map(c
   const subs=c.subs.filter(s=>ALL.some(p=>inCat(p,c.id,s)));
   return `<div class="catcol" data-m="${c.id}"><h3>${c.name}</h3><p>${c.hint} · ${n} modelos</p><div class="catlinks"><button type="button" class="catlink all" data-m="${c.id}" data-s="">Ver todo</button>${subs.map(s=>`<button type="button" class="catlink" data-m="${c.id}" data-s="${s}">${s}</button>`).join("")}</div></div>`}).join("")}
 function resetSize(){size="";document.querySelectorAll(".szc").forEach(x=>x.setAttribute("aria-pressed","false"));const cs=document.getElementById("clearSize");if(cs)cs.hidden=true}
-document.addEventListener("click",e=>{const a=e.target.closest("[data-nav]");if(!a)return;e.preventDefault();const[m,s]=a.dataset.nav.split("|");resetSize();setMain(m,s);const sh=document.getElementById("tienda");const h=(document.querySelector("header.top")||{}).offsetHeight||58;window.scrollTo({top:sh.getBoundingClientRect().top+scrollY-h,behavior:"smooth"})});
+function openNav(v){const[m,s]=v.split("|");resetSize();setMain(m,s)}
+document.addEventListener("click",e=>{const a=e.target.closest("[data-nav]");if(!a)return;openNav(a.dataset.nav);if(location.hash==="#tienda"){e.preventDefault();document.getElementById("tienda").scrollIntoView({behavior:"smooth"})}},true);
+if(location.hash==="#navidad"){openNav("h|Navidad");setTimeout(()=>document.getElementById("tienda").scrollIntoView(),300)}
 function toShop(){const s=document.getElementById("tienda");const h=(document.querySelector("header.top")||{}).offsetHeight||58;const y=s.getBoundingClientRect().top+scrollY-h;if(scrollY>y+5)window.scrollTo({top:y,behavior:"auto"})}
 mainEl.addEventListener("click",e=>{const b=e.target.closest(".mtab");if(b){resetSize();setMain(b.dataset.m);toShop()}});
 subEl.addEventListener("click",e=>{const b=e.target.closest(".stab");if(!b)return;sub=b.dataset.s;try{localStorage.setItem("byp-sub",sub)}catch(e){};resetSize();drawTabs();render();toShop()});
