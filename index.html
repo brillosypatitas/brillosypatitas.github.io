@@ -1153,7 +1153,7 @@ function render(){
   sale.hidden=!hasSale;
   if(hasSale)sale.innerHTML=`<span class="script">¡Sale!</span><span><b>Prendas desde S/ ${main==="m"?10:18}</b> en últimas tallas.</span><button type="button" class="clear" id="goSale">Ver ofertas →</button>`;
   if(hasSale)document.getElementById("goSale").onclick=()=>{sub=saleSub;drawDir();drawTabs();render();document.getElementById("tienda").scrollIntoView()};
-  let list=term?ALL:ALL.filter(p=>inCat(p,main,sub));
+  let list=term?ALL:ALL.filter(p=>sub==="Navidad"?catsAll(p).some(x=>x[1]==="Navidad"):inCat(p,main,sub));
   if(term)list=list.filter(p=>norm(p.name+" "+p.desc+" "+p.col.name).includes(term));
   list=list.map((p,i)=>[p,i]).sort((a,b)=>(sub==="Navidad"?(/Navidad|Noel/.test(b[0].name))-(/Navidad|Noel/.test(a[0].name)):0)||(main==="m"&&!sub?(b[0].col.id==="machitos")-(a[0].col.id==="machitos"):0)||(b[0].photos.length>0)-(a[0].photos.length>0)||a[1]-b[1]).map(x=>x[0]);
   const g=document.getElementById("grid");
