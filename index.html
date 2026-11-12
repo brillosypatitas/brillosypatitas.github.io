@@ -233,6 +233,9 @@ section{scroll-margin-top:calc(64px + env(safe-area-inset-top,0px))}
 .dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px}
 .dots i{width:8px;height:8px;border-radius:50%;background:#ffffff99;box-shadow:0 0 0 1px #0002}
 .dots i.on{background:#fff}
+.ofr{position:absolute;right:10px;top:10px;background:var(--pink);color:#fff;font:800 .72rem var(--body);letter-spacing:.04em;padding:5px 10px;border-radius:999px;box-shadow:0 2px 8px #0003}
+.size s,.from s{opacity:.55;font-weight:500;margin-right:4px;font-size:.78em}
+.size.is-off{border-color:var(--pink)}
 .cap{position:absolute;left:10px;top:10px;background:color-mix(in srgb,var(--card) 92%,transparent);color:var(--ink);font:700 .75rem var(--body);padding:4px 9px;border-radius:999px;box-shadow:0 2px 8px #0002}
 .tagrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .chip{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--pink-soft);color:var(--ink);border-radius:999px;padding:2px 8px}
@@ -1138,10 +1141,15 @@ const norm=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 function startPhoto(p,t){if(!t)return 0;const i=p.photos.findIndex(k=>PHOTO_SIZES[k]&&PHOTO_SIZES[k].includes(t));return i<0?0:i}
 function colorLine(p,t){if(!t)return"";const ks=p.photos.filter(k=>PHOTO_SIZES[k]);if(!ks.length)return"";const ok=ks.filter(k=>PHOTO_SIZES[k].includes(t));const named=ok.filter(k=>PHOTO_COLOR[k]).map(k=>PHOTO_COLOR[k]);if(named.length)return`Colores en talla ${t}: ${named.join(", ")}`;return ok.length?`${ok.length} ${ok.length>1?"fotos/colores":"foto/color"} disponibles en talla ${t}`:`Consulta colores en talla ${t}`}
 function capOf(p,k){if(PHOTO_CAP[k])return PHOTO_CAP[k];const ts=p.prices.map(x=>x.t).filter(t=>!/^(Único|Par|Set)$/.test(t));return ts.length?"Disponible: talla "+fmtSizes(ts):""}
+const OLDP={"0 mini":23,"0":26,"1":29,"2":32,"3":35,"4":38,"5":42};
+const isSpecial=p=>p.desc.startsWith("☀️ Precio especial de verano");
+const isOffer=p=>isSpecial(p)||/^Oferta|Sale/.test(p.name);
+const oldOf=(p,t)=>isSpecial(p)?(/Fresas II/.test(p.name)&&t==="0"?25:OLDP[t]):null;
+const moneyOff=(p,x)=>{const o=oldOf(p,x.t);return o&&x.v!=null&&o>x.v?`<s>S/ ${o}</s>${money(x.v)}`:money(x.v)};
 function photoBlock(p,t){
   if(!p.photos.length)return`<div class="ph ph-empty">${pawSvg}<a href="${p.col.url}" target="_blank" rel="noopener">Ver foto en el catálogo</a></div>`;
   const st=startPhoto(p,t);const dots=p.photos.length>1?`<div class="dots">${p.photos.map((_,k)=>`<i class="${k===st?"on":""}"></i>`).join("")}</div>`:"";
-  return`${(()=>"")()}<button type="button" class="ph" data-k="${startPhoto(p,t)}" aria-label="${p.photos.length>1?"Ver otra foto de "+p.name:"Foto de "+p.name}"><img src="${IMG[p.photos[startPhoto(p,t)]]}" alt="${p.name}" loading="lazy">${dots}<span class="cap"${capOf(p,p.photos[startPhoto(p,t)])?"":" hidden"}>${capOf(p,p.photos[startPhoto(p,t)])}</span></button>`;
+  return`${(()=>"")()}<button type="button" class="ph" data-k="${startPhoto(p,t)}" aria-label="${p.photos.length>1?"Ver otra foto de "+p.name:"Foto de "+p.name}"><img src="${IMG[p.photos[startPhoto(p,t)]]}" alt="${p.name}" loading="lazy">${dots}<span class="cap"${capOf(p,p.photos[startPhoto(p,t)])?"":" hidden"}>${capOf(p,p.photos[startPhoto(p,t)])}</span>${isOffer(p)?'<span class="ofr">☀️ OFERTA</span>':""}</button>`;
 }
 
 function render(){
@@ -1189,7 +1197,8 @@ function cardHTML(gr,i,v,keepT){
   const p=gr.vs[v].p,t=keepT||size;
   const sel=t?p.prices.findIndex(x=>x.t===t):-1;
   const allv=gr.vs.flatMap(x=>x.p.prices.map(y=>y.v)).filter(x=>x!=null);
-  const fromTxt=allv.length?`Desde <b>S/ ${Math.min(...allv).toFixed(2)}</b>`:`<b>Precio por WhatsApp</b>`;
+  const mn=gr.vs.flatMap(x=>x.p.prices.filter(y=>y.v!=null).map(y=>[y.v,oldOf(x.p,y.t)])).sort((q,r)=>q[0]-r[0])[0];
+  const fromTxt=allv.length?`Desde ${mn&&mn[1]&&mn[1]>mn[0]?`<s>S/ ${mn[1]}</s>`:""}<b>S/ ${Math.min(...allv).toFixed(2)}</b>`:`<b>Precio por WhatsApp</b>`;
   const isNew=/Novedad/.test(p.desc);
   const many=gr.vs.length>1;
   const tag=(()=>{const cs=catsOf(p);const c=cs.find(x=>x[0]===main)||cs[0];return (CATS.find(k=>k.id===c[0]).name)+(c[1]?" · "+c[1]:"")})();
@@ -1201,7 +1210,7 @@ function cardHTML(gr,i,v,keepT){
     ${sws}
     <div class="from">${fromTxt}</div>
     <div class="plabel">Precio por talla${many?" de este "+(/^Oferta/.test(gr.vs[0].label)?"artículo":"color/modelo"):""} <span>· toca la tuya</span></div>
-    <div class="sizes" role="group" aria-label="Tallas">${p.prices.map((s2,j)=>`<button type="button" class="size" data-j="${j}" aria-pressed="${j===sel}"><span>${s2.t==="Único"?"Único":s2.t==="Par"?"1 par":s2.t==="Set"?"Set completo":"Talla "+s2.t}</span>${money(s2.v)}</button>`).join("")}</div>
+    <div class="sizes" role="group" aria-label="Tallas">${p.prices.map((s2,j)=>`<button type="button" class="size" data-j="${j}" aria-pressed="${j===sel}"><span>${s2.t==="Único"?"Único":s2.t==="Par"?"1 par":s2.t==="Set"?"Set completo":"Talla "+s2.t}</span>${moneyOff(p,s2)}</button>`).join("")}</div>
     <div class="meas">${sel>=0?measFor(p,p.prices[sel].t):(p.prices[0]&&/^(Único|Par|Set)$/.test(p.prices[0].t)?"":"Toca una talla para ver sus medidas")}</div>
     <a class="btn-wa" href="${waLink(wp,sel>=0?p.prices[sel]:null)}" target="_blank" rel="noopener">${waIcon}Pedir por WhatsApp</a></div></article>`}
 
