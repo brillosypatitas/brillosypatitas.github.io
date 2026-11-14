@@ -353,7 +353,7 @@ body{transition:background-color .3s}
 .envh{font-size:1.05rem;margin:22px 0 10px;font-weight:700}
 .promo.xmas{background:linear-gradient(90deg,#9e1b32,#b3263d 50%,#1f6b46);color:#fff}
 .promo.xmas a{color:#fff;text-decoration:none}.promo.xmas b{color:#ffe08a}
-@media (max-width:560px){.promo.xmas .sep{display:none}.promo.xmas a{display:block;padding:1px 0}.promo.xmas a:nth-of-type(3){display:none}}
+@media (max-width:560px){.promo.xmas .sep{display:none}.promo.xmas a{display:block;padding:1px 0}.promo.xmas a:nth-of-type(2),.promo.xmas a:nth-of-type(4){display:none}}
 .btn-wa.btn-xmas{background:#b3263d;color:#fff}
 .tile-xmas span{background:#b3263d!important;color:#fff!important}
 .hero.snow::before,.hero.snow::after{content:"";position:absolute;inset:-40px 0 0 0;pointer-events:none;z-index:0;
@@ -378,7 +378,7 @@ body{transition:background-color .3s}
 #tienda{scroll-margin-top:72px}
 </style>
 
-<div class="promo xmas"><a href="#tienda" data-nav="h|Navidad">🎄 <b>Colección Navideña</b> ya disponible · <u>Ver colección</u></a><span class="sep"> · </span><a href="#envios">🚚 Envío gratis desde <b>S/ 199</b></a><span class="sep"> · </span><a href="https://wa.me/51991720418?text=Hola%20Brillos%20y%20Patitas%20%F0%9F%90%BE%20Quiero%20separar%20mi%20talla.%20Mi%20mascota%20usa%20talla%3A%20" target="_blank" rel="noopener">💬 <b>Separa tu talla hoy</b></a></div>
+<div class="promo xmas"><a href="#tienda" data-nav="h|Ofertas verano">🖤 <b>Black Friday adelantado</b> · vestidos de verano en oferta · <u>Ver ofertas</u></a><span class="sep"> · </span><a href="#tienda" data-nav="h|Navidad">🎄 <b>Colección Navideña</b> ya disponible · <u>Ver colección</u></a><span class="sep"> · </span><a href="#envios">🚚 Envío gratis desde <b>S/ 199</b></a><span class="sep"> · </span><a href="https://wa.me/51991720418?text=Hola%20Brillos%20y%20Patitas%20%F0%9F%90%BE%20Quiero%20separar%20mi%20talla.%20Mi%20mascota%20usa%20talla%3A%20" target="_blank" rel="noopener">💬 <b>Separa tu talla hoy</b></a></div>
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#inicio">
@@ -1149,7 +1149,7 @@ const moneyOff=(p,x)=>{const o=oldOf(p,x.t);return o&&x.v!=null&&o>x.v?`<s>S/ ${
 function photoBlock(p,t){
   if(!p.photos.length)return`<div class="ph ph-empty">${pawSvg}<a href="${p.col.url}" target="_blank" rel="noopener">Ver foto en el catálogo</a></div>`;
   const st=startPhoto(p,t);const dots=p.photos.length>1?`<div class="dots">${p.photos.map((_,k)=>`<i class="${k===st?"on":""}"></i>`).join("")}</div>`:"";
-  return`${(()=>"")()}<button type="button" class="ph" data-k="${startPhoto(p,t)}" aria-label="${p.photos.length>1?"Ver otra foto de "+p.name:"Foto de "+p.name}"><img src="${IMG[p.photos[startPhoto(p,t)]]}" alt="${p.name}" loading="lazy">${dots}<span class="cap"${capOf(p,p.photos[startPhoto(p,t)])?"":" hidden"}>${capOf(p,p.photos[startPhoto(p,t)])}</span>${isOffer(p)?'<span class="ofr">☀️ OFERTA</span>':""}</button>`;
+  return`${(()=>"")()}<button type="button" class="ph" data-k="${startPhoto(p,t)}" aria-label="${p.photos.length>1?"Ver otra foto de "+p.name:"Foto de "+p.name}"><img src="${IMG[p.photos[startPhoto(p,t)]]}" alt="${p.name}" loading="lazy">${dots}<span class="cap"${capOf(p,p.photos[startPhoto(p,t)])?"":" hidden"}>${capOf(p,p.photos[startPhoto(p,t)])}</span>${isOffer(p)?'<span class="ofr">🖤 BLACK FRIDAY</span>':""}</button>`;
 }
 
 function render(){
