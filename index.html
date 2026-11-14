@@ -1143,8 +1143,10 @@ function colorLine(p,t){if(!t)return"";const ks=p.photos.filter(k=>PHOTO_SIZES[k
 function capOf(p,k){if(PHOTO_CAP[k])return PHOTO_CAP[k];const ts=p.prices.map(x=>x.t).filter(t=>!/^(Único|Par|Set)$/.test(t));return ts.length?"Disponible: talla "+fmtSizes(ts):""}
 const OLDP={"0 mini":23,"0":26,"1":29,"2":32,"3":35,"4":38,"5":42};
 const isSpecial=p=>p.desc.startsWith("☀️ Precio especial de verano");
-const isOffer=p=>isSpecial(p)||/^Oferta|Sale/.test(p.name);
-const oldOf=(p,t)=>isSpecial(p)?(/Fresas II/.test(p.name)&&t==="0"?25:OLDP[t]):null;
+const OLDC={"0":23,"1":25,"2":27,"3":29};
+const isCuad=p=>/^Camisa A Cuadros/.test(p.name);
+const isOffer=p=>isSpecial(p)||isCuad(p)||/^Oferta|Sale/.test(p.name);
+const oldOf=(p,t)=>isSpecial(p)?(/Fresas II/.test(p.name)&&t==="0"?25:OLDP[t]):isCuad(p)?OLDC[t]:null;
 const moneyOff=(p,x)=>{const o=oldOf(p,x.t);return o&&x.v!=null&&o>x.v?`<s>S/ ${o}</s>${money(x.v)}`:money(x.v)};
 function photoBlock(p,t){
   if(!p.photos.length)return`<div class="ph ph-empty">${pawSvg}<a href="${p.col.url}" target="_blank" rel="noopener">Ver foto en el catálogo</a></div>`;
