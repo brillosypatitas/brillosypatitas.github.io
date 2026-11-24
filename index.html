@@ -1201,7 +1201,7 @@ function cardHTML(gr,i,v,keepT){
   const sel=t?p.prices.findIndex(x=>x.t===t):-1;
   const allv=gr.vs.flatMap(x=>x.p.prices.map(y=>y.v)).filter(x=>x!=null);
   const mn=gr.vs.flatMap(x=>x.p.prices.filter(y=>y.v!=null).map(y=>[y.v,oldOf(x.p,y.t)])).sort((q,r)=>q[0]-r[0])[0];
-  const fromTxt=allv.length?`Desde ${mn&&mn[1]&&mn[1]>mn[0]?`<s>S/ ${mn[1]}</s>`:""}<b>S/ ${Math.min(...allv).toFixed(2)}</b>`:`<b>Precio por WhatsApp</b>`;
+  const fromTxt=allv.length?`${mn&&mn[1]&&mn[1]>mn[0]?`<s>S/ ${mn[1]}</s>`:""}<b>S/ ${Math.min(...allv).toFixed(2)}</b>`:`<b>Precio por WhatsApp</b>`;
   const isNew=/Novedad/.test(p.desc);
   const many=gr.vs.length>1;
   const tag=(()=>{const cs=catsOf(p);const c=cs.find(x=>x[0]===main)||cs[0];return (CATS.find(k=>k.id===c[0]).name)+(c[1]?" · "+c[1]:"")})();
